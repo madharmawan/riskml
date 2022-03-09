@@ -35,6 +35,11 @@ Any edits are sent back to the developer for additional commits that may be need
 Once the repo maintainer approves, the developer's updates in the forked repository are merged with the main project repository. The product is updated with the new
 feature/bug fix, and now can be viewed by other end users.
 
+
+# Try it Out to Test
+Make a pull request that creates a new python folder with any function inside. Call it pullreqtest.py
+Or, make an edit to pullreqtest.py by deleting code, adding more, or editing the existing code.
+
 Sources:
 https://www.pagerduty.com/resources/learn/what-is-a-pull-request/#:~:text=A%20pull%20request%20%E2%80%93%20also%20referred,with%20the%20main%20project%20repository.
 https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
