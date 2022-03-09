@@ -4,3 +4,9 @@ Threefold project. Creating a generalized game of risk with arbitrary territorie
 Read the pullreq.md for information about making a pull request
 
 Read spec.md for the speficiations of the project.
+
+Read implement.md for ideas on how to implement the project
+
+Read updates.md for the latest updates (also make pull requests to update it)
+
+Read todo.md for something to-do
