@@ -8,6 +8,8 @@ and finally, to apply principles of machine learning on top of it and learn how 
 Either way, we will gain experience as programers in the development of RISK, and learn a bit about
 machine learning and how it can be used to find the best strategy for this complex game.
 
+The game will be created in Python because of its ability to handle OOP, a for its community for GUI and ML packages
+
 
 # Overview of the Project
 
