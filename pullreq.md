@@ -15,25 +15,23 @@ encourage collaboration and open communication when working on new product updat
 
 # How to Make a Pull Request?
 
-## 1. Fork Main Repository and Create Local Clone
-The developer creates a fork of the main repository, and clones this onto their local machine
+# 1. Fork the Repository
+It should be on the top right corner of screen
 
-## 2. Local Changes
-That developer then is able to make their needed changes or additions to the code
+# 2. Make, edit, alter, delete files
+In other words, work on the project
 
-## 3. Push Local Changes to Forked Repository
-Once developer completed and tested the new code changes, they push these changes back to the forked repository they created in step one
+# 3. Commit your files and Create PR
+Click the contribute button on the main page of the forked repository. Create a pull request. Do not do anything after that
 
-## 4. Make a Pull Request
-Make a pull request on the repo. Please add in a message describing what files are updated/added, and a brief description of what it does.
+# 4. Maintainer will Review it
+The repo maintainer will see that you made a PR and approve or not approve of it. After it has been approved. Delete the fork, so you do not accidentally work on it.
 
-## 5. Maintainer Looks at the Code
-The maintainer will look at the work done in the developer's forked repository, and then make comments or requests on any edits that need to be made for approval.
-Any edits are sent back to the developer for additional commits that may be needed. Once no more edits are needed, the Maintainer will approve the pull request
+# 5. How to Delete Fork
+On the origin repository, click pull requests tab on the top, and then clicked the closed button (next to open). Then select your fork and delete it. This is so that you do not work on a forked version that is not up to date with the project.
 
-## 6. Merging with Master
-Once the repo maintainer approves, the developer's updates in the forked repository are merged with the main project repository. The product is updated with the new
-feature/bug fix, and now can be viewed by other end users.
+
+# Everytime you want to make a change you have to submit a pull request and fork the repository.
 
 
 # Try it Out to Test
