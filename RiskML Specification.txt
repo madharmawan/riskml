@@ -1,0 +1,392 @@
+﻿Spec in Progress
+
+
+RISK Machine Learning Project
+
+
+
+
+
+
+Project Members: 
+
+
+Matthew Dharmawan
+Joseph Selfani
+Oscar Tapia
+
+
+
+
+________________
+
+
+Goal of the Project
+The goal of the project is threefold: One, to learn game development skills by recreating a generalized version of the game of Risk. Two, to learn the GUI development process. Three, to learn about Machine Learning by creating an AI for the game. We want to test our AI on various different game maps, such as the standard Risk world map, a scattered/random map, and possibly a heavily surrounded territory but with a lot of bonus troops for owning it. By generalized version of Risk, we mean that we will use the standard rules of Risk, but the territories and placements of these will be varied.
+
+
+Why Risk? Why This Project?
+We sought after the game of Risk because it is a game we all know, but there aren’t too many resources on the subject with regards to machine learning. We wanted a project that gives us experience in topics we are all interested in, namely game development, GUIs, and machine learning. Going through this development following software development principles will give us necessary experience in software engineering, careers we want to look into for the future. 
+
+
+Roles and Responsibilities
+Given that we are working with a relatively small group, we still want to mock the development process in the tech space. We have created a repository via GitHub, and will have one code maintainer, and three developers. The code maintainer role is given to Matthew Dharmawan, and the developers are Matthew Dharmawan, Joseph Selfani, and Oscar Tapia. As of writing this specification document, we do not have any plans of adding members, but we have that option as a possibility.
+
+
+About the AI in Risk
+Risk is an interesting game to apply neural networks to. Unlike games like Chess where there is only one decision made per player for each turn, in Risk, there are multiple decision points one must make to gain advantages, depending on the resources available to them and the decisions of the opponents. It will be a challenge to create an AI that can make these decisions, ultimately making it an interesting project to analyze. Only a few papers have been written on the subject. Risk is a war-based, resource-management game, so work has been done to similar games like Settler of Catan, but not much has been in Risk. Even the ones in Risk have been severely limited in what the AI can do, such as finishing the attack all the way through with territory against territory, rather than deciding when to stop based on the current results of the battle.
+
+
+Outline of the Project
+We are unsure of the exact timeline/deadlines of the project since it is a project that will be our focus in our freetime. However, we have talked extensively with each other to determine the main parts of the project: what libraries we will be using, and the order of development. We have settled on using python to create the game, react.js to create the GUI, and tensor flow library to create the AI. This will also be the order we do the project in. We chose this softwares from speaking with experienced people in the software engineering space, and we are all comfortable with programming in Python from CS 61A, and large project development from CS 61B at UC Berkeley. We aim to see our progress by the end of Fall 2022 semester and make more concrete goals and deadlines.
+________________
+Phase I: Game Development
+In this section, we will be focusing on the logic and programming of the game of Risk, discussing ways to improve the speed of computation with fast data structures. The current plan of this phase is to assume that there will be no GUI made, and the game should be able to be played in the terminal. 
+
+
+The rules of Risk we will be following are here: https://www.ultraboardgames.com/risk/game-rules.php 
+
+
+We will be playing the standard variation of Risk, with a few alterations with the amount of territories, and their placements. There will be the dummy player in 2 player mode, so that will be handled here. 
+
+
+So here is the outline of this phase:
+* A brief summary of each of the classes we will be developing
+* A more detailed description of each class, including logic and methods that will be implemented.
+________________
+
+
+RISK Specification
+
+
+Prompt: create a generalized version of the game of Risk. That is all the standard rules of Risk except territories and continents can be created by the developer in any way (i.e. number of continents, number of territories in each continent, the borders of each territory, how much bonus is given for controlling a territory).
+
+
+First a brief description of each Class, then afterwards a more detailed specification for what the methods the classes should support.
+
+
+There are 3 groupings of classes: Board Classes IMap/Continent/Territory). Player/Cards, and Game/Main. They are the static map objects, the things that act on the map object, and the things that control the flow of the game, respectively. 
+
+
+Territory.py, Continent.py, Map.py
+A Territory is a controllable area that is located in a Continent. All territories must be in a Continent, and all Continents must be in a Map. 
+
+
+A Territory holds all the information about who owns it, how much troops are in the area, and information about what it borders. The program should be able to create territories, and manage the borders between territories through the Graph data structure.
+
+
+After the territories have been made, specific territories are together in a Continent. The Continent holds information about what territories are in it, and how much bonus complete control gives. It should not really know all the Players that have control over territories, but it should know when a Player owns all of it. 
+
+
+Finally, a Map holds all the Continents. It really is just a class that holds stuff, and no methods should be performed on it except adding the Continent to the Map. However, each Continent can only be placed in a map, and there should not be more than one map that has the same territory (in the game, there only is just one Map).
+
+
+Other things to note about the board. Only the territories know what border each territory. Continents do not have borders. In fact a continent is just a tag given to the territory to indicate what continent it is in. And the Continent only knows when a player controls all of it. 
+
+
+Player.py
+Handles all the features of a Player instance, such as how many territories a Player owns, how many total troops they possess. The number of cards they have in their hand. Players should be able to attack each other in this class and move their troops around according to the current Board.
+
+
+Card.py
+Handles all the features of the card system in Risk. In Risk, there are 2 types of cards, the Standard Card, and the Wild Card. In Risk, obtaining either 3 of a kind or all three card types will grant a bonus based on how many card sets have been turned in throughout the Game, with each additional set turned in giving the Player more troops. In addition, each Standard Card will have a territory name attached to it and if the Player owns the territory at the time of turning in that Card, they will receive bonus troops for that territory.
+
+
+All the territories must be created first before any card is created. The number of cards is dependent on the amount of territories. If there are 50 territories, there are 50 cards, each one having the territory on it. There will also be 5% more cards of wildcards. The split of the three card types will also be even (or as even as possible).
+
+
+Game.py
+Handles all the flow of the game, such as initializing, start of the game, what happens during a Player’s turn, switching the turn, and how to deal with a Player losing the game and continuing until there is one Player left.
+________________
+Now for a more detailed description of the classes with the methods
+Territory.py (treat Territory like a Node of a Graph)
+* __init__
+   * Each territory contains info on
+      * The name of Territory
+      * Who owns it (Player instance or None)
+      * Name of continent it is in
+      * A dictionary of the borders. Initially empty.
+         * Key: name of bordering territory
+         * Value: a pointer to the name of the territory
+      * Why a dictionary? It feels more intuitive to go self.borders[<territory1>].borders[<territory2>].... It is also constant time. 
+* add_border(self, other)
+   * Probably something like
+   * self.borders[other.name] = other
+   * The add_border should also make the other’s border the self because the graph should not be directed
+   * other.borders[self.name] = self
+* remove_border(self, other)
+   * Just in case we change our mind later in the construction. 
+* Class variables
+   * Total territories. Add for every __init__ run.
+* Methods to get information (treat it like Java’s private tag)
+   * get_borders(self): List out the names of the borders of a territory
+   * get_troops(self): integer of the number of troops in the territory
+   * get_owner(self): returns the player instance who owns it.
+
+
+All self represent territories
+________________
+Continent.py
+
+
+Treat Continent like a tag on the continent, it is much more simpler in construction but important to keep track of ownership. Not border stuff.
+
+
+* __init__(self, name)
+   * Self.name = name
+   * self.territories = [] (a list of all the territories in a Continent
+   * self.owner = <Player>
+   * self.bonus = <int>
+* Class variables
+   * Total Continents.
+* add_territory(self, territory)
+   * self.territories.append(territory)
+   * It is a list of many pointers to objects
+* Getter Methods
+   * getTerritories(self): lists all the territories in a Continent
+   * getName(self): gets the name of the continent
+* getConquerer(self):
+   * Returns the player instance if a player owns all of it. Otherwise returns None
+   * getTerritories list. Set the player type to be the 0th element (play). Now loop through it and make sure that self.territories[i].owner == play for every element. Return player if we get through the whole list. Otherwise return false if any other player appears.
+   * The bonus will be handled in the Game class.
+________________
+Map.py
+Although there isn’t much to this class other than holding the Continents, we also want some way of displaying it out to the terminal in a toString type of method
+
+
+   * __init__(self):
+   * self.continents = [] (will point to each continent instance)
+   * showStats(self):
+   * Will show the current statistics of the board as an output to the terminal, including
+   * showMap(self):
+   * Will create a visual graph detailing the nodes and connections between the various territories as an output file rather than printing it to the terminal. The file will be named based on the turn number and player’s turn
+   * dump(self):
+   * An easy way to run both display methods.
+________________
+Player.py
+This class will hold each player instance as well as all the actions a Player can perform in the game
+
+
+      * __init__(self)
+      * Self.troops = 0
+      * Self.territories = []
+      * Self.continents = []
+      * Self.hand = []
+      * add_troops(self, num):
+      * Adds the desired number of troops to the player’s hand. Important for the beginning of the turn when the bonus is calculated
+      * transport_troops(self, terr1, terr2, num):
+      * Moves the num of troops from terr1 to terr2.
+      * The player must own every connection from terr1 to terr2. 
+      * There has to be someway to checking if they own the troops along the way (or just one path that is good)
+      * Some sort of graph traversal will be needed
+      * remove_troops(self, num):
+      * A helper method to make the program feel intuitive rather than doing add_troops (-num)
+      * attack(self, s_terr, s_num, other, o_terr, o_num):
+      * Runs the simulation of attacking another player with self being the attacker and other being the defender. Since the choice of how many to attack with is given to the attacker, there are other parameters to deal with this.
+      * The method will pass the simulation off to another helper method, maybe a dice method.
+      * conquer(self, territory)
+      * Will serve as the function to conquer the territory (make its owner self). However, more support is needed to handle the card function of the game.
+
+
+After every action, there will be possible options that the player can run. More on this at the end of the phase section.
+________________
+CardSet.py
+There are three classes in this file. Card, StandardCard, and WildCard. It both will create the card bank to pull from, and keep track of completed sets and the bonus associated with it. The set will be shuffled, but the way it will be shuffled is to pick a random number from the set and pop it out to the player’s hand
+      * __init__(self, territories):
+      * Need a list of territories to create a card for each one.
+      * Self.num_cards = len(territories)
+      * Self.set = []
+      * For t in territories:
+      * Create a card instance and append it to the set.
+      * deal_card(self, player):
+      * Pick a random number in the length of self.set (this is a shuffle)
+      * player.hand.append = self.set.pop(random number)
+      * Here we are just moving pointers around, which is how we will do the CardSet and Card function of the game.
+
+
+Card.py
+      * __init__(self, territory, type)
+      * Self.territory = territory
+      * Self.type = type
+      * Self.wildcard = false
+      * Parameter type is a three element list of booleans with two false and one true, depending on what card type it is.
+      * toString(self)
+      * Returns a readable format of the card information. Useful for the Game.py class.
+WildCard(Card)
+      * __init__(self, territory (a list), type)
+      * Self.territory = None
+      * Self.type = [true, true, true]
+
+
+________________
+
+
+Main.py and .in files
+In files start the initial condition of the game, how many players, the territories and the map being played on. It is read similar to the config file in the Enigma project (CS61B). 
+
+
+The file will need to be in the following format:
+
+
+The map name begins the .in file followed immediately by two numbers in the next line. The first number represents how many players will be playing manually, and the second number is the number of AIs. A player is one that performs actions, not the neutral player in the case of 2. In the case that we have 1 1, then there will be a neutral player, but that does not need to be indicated in the .in file. For example, the world map might have the .in file beginning with
+
+
+World Map
+2 3
+
+
+Indicating that the map name is “World Map”, and there will be 2 manual and 3 auto players in this game. 
+
+
+Following the map stuff will be the continent stuff. Continent names will need to be stated first, then territories. The name of the Continent will be stated first, followed by the number that indicates the bonus of controlling the entire Continent. The continents will be indicated by a * appearing first. The name will be stated, then a comma then the number. There will be a space between each comma for easy to read purposes. There will also be a newline between the names of the continents In addition, an asterisk will end the stating of continents. For example on the world map, it might be something like
+
+
+World Map
+2 3
+* 
+North America , 5  
+South America , 7  
+Europe , 8 
+Asia , 11 
+Australia , 4  
+Africa , 6 
+*
+
+
+Which indicates that we have 6 continents. North America has a bonus of 5, South America 7, Europe 8, Asia 11, Australia 4, and Africa 6. 
+
+
+Then what follows is the list of territories. Here is how they will be formatted. It will be its name followed by the continent it is contained in. for example, if some of the states in the US were territories, it would be formatted as the following: <name territory> , <continent name>. Each Territory must be in a new line
+World Map
+2 3
+* 
+North America , 5  
+South America , 7  
+Europe , 8 
+Asia , 11 
+Australia , 4  
+Africa , 6 
+*
+California , North America
+Delaware, North America
+France , Europe
+India , Asia
+Australia , Australia
+Egypt , Africa
+Brazil , South America
+Spain , Europe
+
+
+
+
+Main will be reading the .in file 
+There will need to be no more initial conditions needed in the .in file. Note that the continents in the territory list do not need to be grouped together. Also, we will need to error check bad .in files that are not what is in the form above.
+
+
+The .in file should be able to create the Map, Continents, Territory instances, as well as the set of Cards and the Players. From this, Main will determine the amount of starting troops each player begin with, then it will pass the control over to Game. The Game will now take over running the progress, and so on.
+________________
+Game.py
+To play the actual game, we have the Game.py file. The goal with this phase is to be able to play the game of Risk through only using the terminal. This means we will have prompts and our Game.py file should be able to read the prompts. The input will then be parsed by Game.py and then run the corresponding method in the corresponding class. While there are three phases in Risk, we will break it down into more phases
+
+
+The general structure: don’t know about parameters for each method, but the main idea is described below.
+While (gameInProgress):
+        initialize()
+        trade()
+        support()
+        attack()
+        fortify()
+        rewards()
+        change_player()
+
+
+And then the support, attack, fortify, and change_player methods will handle the prompts according to what is given. There will be three different .out files that are created for a player’s turn.
+
+
+initialize()
+      * Every start of the turn will create a new .out file
+      * Will announce the current player’s turn, and create a .out file for the player to see the current state of the board. It will be named <player’s name>_<turn count>_1.out
+      * (basically call dump with the correct file name)
+trade()
+      * They will also see their hand, which is a 0 indexed list
+      * They can type “trade cards , <num> <num> <num>” into the terminal to gain the additional troops of trading them. The nums correspond to the index of the list. If they input something wrong or try to trade an invalid set, the terminal will ignore it. And tell the user they inputted an invalid response
+      * “trade done” will end this phase
+      * At any point in this phase, they can also type “see hand” to see their hand, which will display the list again.
+
+
+support()
+      * The total number of troops is now calculated, including the bonus if they traded a valid set. 
+      * The command “add <num> <territory>” will add num troops to the territory. They must own the territory and have enough troops to add in order for it to be a valid add call. 
+      * If leftover troops are still there, the number left will be displayed after every “add <num> <territory>” call. 
+      * “support done” will end this phase.
+
+
+attack()
+      * A new .out file will be created titled <player name>_<turn count>_2.out
+      * The command “attack <player territory> <num> <opponent territory>” will attack the opponent’s territory with num amount of dice. It will display the result and the remaining troops in the terminal to see how many are left. The command would need to be said again if they want to attack it again.
+      * They can do this as many times as they have troops and a valid setup to attack.
+      * Remember that if they conquer a new territory, they will gain a card at the end of their turn
+      * The command “attack done” will end this phase
+
+
+fortify()
+      * A new .out file will be created titled <player name>_<turn count>_3.out
+      * A player can move troops around with the command “fortify <terr1> <terr2> <num>,” which will move num troops from terr1 to terr2. Note that there has to be at least 1 troop in terr1 left, and that the player must own all territories between terr1 to terr2.
+      * They can call this command as many times as they want
+      * They also can call “dump,” which will make a new .out file called dump.out, which is just the current state of the board given at any time of the game and will be overwritten everytime dump is called.
+      * The command “fortify done” will end this phase.
+
+
+rewards()
+      * There will be nothing for the player to input here, but this phase will just reward the player with a card if they fulfilled the requirements. Then the turn is passed to the next player.
+
+
+change_player()
+      * I think designating each player an number would do this method find
+      * Just have a class variable index and then just increment it by one here
+      * Then change _currentturn = (_currentturn + 1) % num_players, so it will be one of the players and it will be in that order.
+
+
+At any point in the game for any prompt, “dump” can be called which will make the dump.out file, which is the state of the Map at that point in time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+________________
+Post - Phase I: What’s Next?
+We know if we have finished phase 1 if we can play a game with manual players through a terminal all the way through with no bugs or errors. Of course there will be some along the way, but the development of the game and how everything is set up is in such a way that it should not break large sections of code, rather just a few methods.
+
+
+Because we can play the entire game through the terminal, the GUI and AI portion of the project should/can be done simultaneously. Why? Because the GUI and AI will not directly call methods from the risk files. They will parse through and interpret the .out files and calls to dump, and then accordingly represent (for the GUI) the state on screen, or calculate (for the AI) their next move.
+
+
+________________
+
+
+GUI Specification
+
+
+The important thing that our development does is that it allows easy transition from Python to React. 
+________________
+ML Specification
+The way our implementation is set up is that it was written in such a way that the AI does not need to directly interact with the program. We think it is just enough to be able to parse through the dump() method and the .out files from the Map class and be able to interpret the results from here. 
+
+
+Because this is the part most of us are interested in, we want to really spend time learning about specific algorithms. Two particular ones that are especially interesting for the project is the zero knowledge AI, like Alphaero, and the Monte Carlo Tree Search (MCTS). This phase is about learning about them and then applying them to our game, this phase is split into two parts: research, and application.
+
+
+In the ML portion of the project, we want to learn the theory behind machine learning algorithms. We know that we want to create one that is able to learn the game and strategy with no data given, only data collected by playing games. 
+
+
+Another type of algorithm is the Monte Carlo Tree Search (MCTS).
