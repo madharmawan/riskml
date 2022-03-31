@@ -1,25 +1,41 @@
 class Territory:
     ALLTERRITORIES = []
-    def __init__(self, name, value):
-        assert isinstance(name, str)
-        self.name = name
-        self.value = value
-        self.troops = 0
-        self.boardering = {}
-        self.boardering.setdefault(None)
-        
-        Territory.ALLTERRITORIES.append(self.name)
+    def __init__(self):
+        # FIX ME
+        pass
     
     def add_troops(self, num):
-        self.troops += num
+        # FIX ME
+        pass
 
-    def set_boarder(self, board):
-        self.boardering[board.name] = board
-        board.boardering[self.name] = self
+    def add_border(self, terr):
+        # FIX ME
+        pass
     
-    def get_boarder(self, board):
-        if board == None:
-            return None
-        elif board.name in self.boardering.keys():
-            return self.boardering[board.name]
-        return None
+    def my_borders(self):
+        # FIX ME
+        pass
+
+    def remove_border(self, terr):
+        # FIX ME
+        pass
+    
+    def my_troops(self):
+        # FIX ME
+        pass
+
+    def my_owner(self):
+        # FIX ME
+        pass
+
+    def set_owner(self, owner):
+        # FIX ME
+        pass
+        
+    def my_stats(self):
+        # FIX ME
+        pass
+
+    def my_name(self):
+        # FIX ME
+        pass

@@ -1,0 +1,98 @@
+*
+World Map
+4 0
+*
+North America,5
+Europe,5
+Asia,7
+South America,2
+Africa,3
+Australia,2
+*
+Alaska,North America
+Alberta,North America
+Central America,North America
+Eastern United States,North America
+Greenland,North America
+Northwest Territory,North America
+Ontario,North America
+Quebec,North America
+Western United States,North America
+Great Britain,Europe
+Iceland,Europe
+Northern Europe,Europe
+Scandinavia,Europe
+Southern Europe,Europe
+Ukraine,Europe
+Western Europe,Europe
+Congo,Africa
+East Africa,Africa
+Egypt,Africa
+Madagascar,Africa
+North Africa,Africa
+South Africa,Africa
+Afghanistan,Asia
+China,Asia
+India,Asia
+Irkutsk,Asia
+Japan,Asia
+Kamchatka,Asia
+Middle East,Asia
+Mongolia,Asia
+Siam,Asia
+Siberia,Asia
+Ural,Asia
+Yakutsk,Asia
+Eastern Australia,Australia
+Indonesia,Australia
+New Guinea,Australia
+Western Australia,Australia
+Argentina,South America
+Brazil,South America
+Peru,South America
+Venezuela,South America
+*
+Alaska,Northwest Territory,Alberta,Kamchatka
+Northwest Territory,Alaska,Alberta,Ontario,Greenland
+Greenland,Northwest Territory,Ontario,Quebec,Iceland
+Alberta,Alaska,Northwest Territory,Ontario,Western United States
+Ontario,Northwest Territory,Greenland,Alberta,Western United States,Eastern United States,Quebec
+Quebec,Greenland,Ontario,Eastern United States
+Western United States,Alberta,Ontario,Eastern United States,Central America
+Eastern United States,Western United States,Ontario,Quebec,Central America
+Central America,Western United States,Eastern United States,Venezuela
+Venezuela,Central America,Peru,Brazil
+Peru,Venezuela,Brazil,Argentina
+Brazil,Venezuela,Peru,Argentina,North Africa
+Argentina,Peru,Brazil
+Iceland,Greenland,Scandinavia,Great Britain
+Great Britain,Iceland,Scandinavia,Northern Europe,Western Europe
+Scandinavia,Great Britain,Iceland,Northern Europe,Ukraine
+Northern Europe,Great Britain,Western Europe,Southern Europe,Ukraine
+Ukraine,Scandinavia,Northern Europe,Southern Europe,Ural,Afghanistan,Middle East
+Southern Europe,Middle East,Egypt,North Africa,Western Europe,Northern Europe,Ukraine
+Western Europe,Northern Europe,Southern Europe,Great Britain
+North Africa,Brazil,Egypt,Southern Europe,East Africa,Congo
+Egypt,North Africa,Southern Europe,Middle East,East Africa
+East Africa,Egypt,North Africa,Congo,Madagascar,Middle East
+Congo,East Africa,North Africa,South Africa,Madagascar
+Madagascar,East Africa,South Africa
+South Africa,Madagascar,Congo
+Middle East,Egypt,Ukraine,Southern Europe,East Africa,India,Afghanistan
+Afghanistan,Middle East,India,China,Ural,Ukraine
+Ural,Ukraine,Afghanistan,China,Siberia
+Siberia,Ural,China,Mongolia,Irkutsk,Yakutsk
+Yakutsk,Kamchatka,Irkutsk,Siberia
+Irkutsk,Mongolia,Siberia,Kamchatka,Yakutsk
+Mongolia,Irkutsk,Siberia,Kamchatka,China,Japan
+Kamchatka,Yakutsk,Irkutsk,Mongolia,Japan,Alaska
+Japan,Kamchatka,Mongolia
+China,
+Afghanistan,Ural,Siberia,Mongolia,Siam,India
+India,Middle East,Afghanistan,China,Siam
+Siam,China,India,Indonesia
+Indonesia,Siam,New Guinea,Western Australia,Eastern Australia
+New Guinea,Indonesia,Western Australia,Eastern Australia
+Western Australia,Indonesia,New Guinea,Eastern Australia
+Eastern Australia,Western Australia,New Guinea,Indonesia
+*
